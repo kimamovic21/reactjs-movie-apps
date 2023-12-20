@@ -1,0 +1,78 @@
+React Intermedia Couse - React Movie App (OMDB API)
+
+-instaliramo Vite React JS projekt
+-otvorimo Web stranicu - https://vitejs.dev/guide/
+-u terminal ukucamo komandu npm create vite@latest react-movie-app
+-udemo u folder sa komandom cd react-movie-app 
+-instaliramo pakete node_modules
+-otvorimo Web stranicu - https://www.omdbapi.com/
+-otvorimo POSTMAN i testiramo Rutu OMDB API key sa metodom GET
+-otvorimo Web stranicu - https://tailwindcss.com/docs/guides/vite
+-u terminalu instaliramo Tailwind CSS pakete
+-instaliramo Eslint pakete u terminalu - https://www.robinwieruch.de/vite-eslint/
+-Link: https://stackoverflow.com/questions/76435306/babel-preset-react-app-is-importing-the-babel-plugin-proposal-private-propert
+-instaliramo Babel plugin paket u terminalu sa komandom npm install --save-dev @babel/plugin-proposal-private-property-in-object
+-u fajl .eslintrc.csj u objekt rules dodajemo 'no-unused-vars': 'off', 'no-undef': 'off'
+-u komponentu App.jsx importujemo React Hook useState
+-u komponenti App.jsx kreiramo state varijablu const [movies, setMovies] = useState([]);
+-kreiramo folder components
+-u folderu components kreiramo komponentu MovieList.jsx
+-u komponenti MovieList.jsx, funkciji MovieList dodajemo parametar destruktuirani prop movies
+-u return izjavi varijabli movies dodajemo metodu .map()
+-metodi .map() dodajemo parametre movie i index
+-u metodi .map() kreiramo div i img elemente
+-u komponentu App.jsx importujemo komponentu MovieList.jsx
+-u return izjavi komponenti MovieList dodajemo prop movies
+-u prop movies proslijedujemo varijablu movies
+-u komponenti App, roditelj div elementu dodajemo Tailwind CSS klase
+-u komponenti App.jsx kreiramo funkciju asinhronu funkciju getMovieRequest()
+-u funkciji getMovieRequest() kreiramo varijable url, response, responseJson
+-importujemo React Hook useEffect
+-kreiramo funkciju useEffect() sa dva argumenta
+-prvi argument je callback funkcija, a drugi argument je niz
+-u callback funkciju dodajemo funkciju getMovieRequest()
+-Link: https://stackoverflow.com/questions/52219852/two-children-with-the-same-key-in-react
+-u funkciju getMovieRequest() dodajemo funkciju setMovies(responseJson.Search)
+-kreiramo state varijablu const [searchValue, setSearchValue] = useState('')
+-kreiramo komponentu MovieListHeading.jsx
+-u komponenti MovieListHeading.jsx, funkciji MovieListHeading dodajemo parametar destruktuirani prop heading
+-u komponentu App.jsx importujemo komponentu MovieListHeading.jsx
+-u return izjavi komponenti MovieListHeading dodajemo prop heading
+-kreiramo komponentu SearchBox.jsx
+-u komponenti SearchBox, funkciji SearchBox dodajemo parametre destruktuirani prop searchValue i setSearchValue
+-u return izjavi kreiramo input element
+-input elementu dodajemo prop value i dogadaj onChange
+-u prop value proslijedujemo varijablu searchValue
+-u dogadaj onChange proslijedujemo anonimnu funkciju sa parametrom e
+-u anonimnu funkciju proslijedujemo funkciju setSearchValue(e.target.value)
+-u komponentu App.jsx importujemo komponentu SearchBox.jsx
+-u return izjavi komponenti SearchBox dodajemo prop searchValue i setSearchValue
+-u funkciji getMovieRequest(), u varijablu url dodajemo dinamican url
+-u funkciju useEffect() dodajemo funkciji getMovieRequest(searchValue)
+-kreiramo komponentu AddFavorites.jsx
+-u komponentu App.jsx importujemo komponentu AddFavorites.jsx
+-u return izjavi komponenti MovieList dodajemo prop favouriteComponent
+-u prop favouriteComponent proslijedujemo komponentu AddFavorites
+-u komponenti MovieList.jsx kreiramo varijablu const FavoriteComponent
+-u return izjavi, u div element dodajemo komponentu FavoriteComponent
+-u komponenti App.jsx kreiramo state varijablu const [favorites, setFavorites] = useState([]);
+-u return izjavi komponenti MovieList dodajemo prop handleFavoritesClick
+-kreiramo funkciju addFavoriteMovie() sa parametrom movie
+-u funkciji addFavoriteMovie() kreiramo varijablu const newFavoriteList
+-u funkciju addFavoriteMovie() dodajemo funkciju setFavorites()
+-u prop handleFavoritesClick proslijedujemo funkciju addFavoriteMovie
+-u komponenti MovieList, div elementu dodajemo dogadaj onClick
+-u dogadaj onClick proslijedujemo funkciju () => handleFavoritesClick(movie)
+-u komponentu App.jsx importujemo komponentu RemoveFavorite.jsx
+-u return izjavi, komponenti MovieList dodajemo prop favoriteComponent proslijedujemo komponentu RemoveFavorite
+-kreiramo funkciju removeFavoriteMovie() sa parametrom movie
+-u funkciji removeFavoriteMovie() kreiramo varijablu const newFavoriteList
+-dodajemo funkciju setFavorites(newFavoriteList)
+-u return izjavi, komponenti MovieList dodajemo prop handleFavoritesClick
+-u prop handleFavoritesClick proslijedujemo funkciju removeFavoriteMovie
+-u komponenti App.jsx kreiramo funkciju saveToLocalStorage()
+-u funkciju addFavoriteMovie dodajemo funkciju saveToLocalStorage(newFavoriteList)
+-kreiramo jos jednu funkciju useEffect()
+-u funkciji useEffect() kreiramo varijablu const movieFavorites
+-u funkciju useEffect() dodajemo funkciju setFavorites(movieFavorites)
+-u funkciju removeFavoriteMovie() dodajemo funkciju saveToLocalStorage(newFavoriteList)
