@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_OMDB_KEY;
-const apiBaseUrl = 'http://www.omdbapi.com/';
+const apiBaseUrl = 'https://www.omdbapi.com/';
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (searchQuery) => {
   try {
