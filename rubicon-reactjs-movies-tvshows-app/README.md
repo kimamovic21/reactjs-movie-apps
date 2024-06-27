@@ -1,4 +1,18 @@
-# React + TypeScript + Vite
+# Rubicon Movies/TV Shows App
+
+## Prerequisite
+In order to start up the project you need to have Node installed
+
+## Setup
+1. Add .env file (Example variables are stored in .env.example file)
+2. npm install (Command to install dependencies)
+3. npm run dev (Command to run server)
+
+## Test
+1. npm run test (Command to test application)
+
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
