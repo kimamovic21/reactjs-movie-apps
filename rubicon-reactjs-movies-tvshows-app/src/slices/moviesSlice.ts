@@ -64,7 +64,30 @@ export const fetchMovies = (): AppThunk<void> => async (dispatch) => {
   } catch (error) {
     console.error(error);
     dispatch(fetchMoviesFailure(error.message));
-  };
+  }
+};
+
+export const searchMovies = (query: string): AppThunk<void> => async (dispatch) => {
+  try {
+    dispatch(fetchMoviesStart());
+    const options = {
+      method: 'GET',
+      url: 'https://api.themoviedb.org/3/search/movie',
+      params: {
+        api_key: API_KEY,
+        query: query,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${API_TOKEN}`
+      }
+    };
+    const response = await axios.request(options);
+    dispatch(fetchMoviesSuccess(response.data.results)); 
+  } catch (error) {
+    console.error(error);
+    dispatch(fetchMoviesFailure(error.message));
+  }
 };
 
 export default moviesSlice.reducer;
