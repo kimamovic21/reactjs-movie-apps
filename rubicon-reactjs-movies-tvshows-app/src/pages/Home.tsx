@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useDebounce } from "use-debounce";
 import { RootState } from "../redux/store";
@@ -8,8 +9,14 @@ import { fetchTVShows, searchTVShows } from "../slices/showsSlice";
 const Home: React.FC = () => {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
-  const [activeTab, setActiveTab] = useState<"movies" | "tvShows">("tvShows"); // Default to TV Shows
+  const [activeTab, setActiveTab] = useState<"movies" | "tvShows">(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.get("tab") as "movies" | "tvShows" || "tvShows";
+  });
+
   const dispatch = useDispatch<any>();
+  const location = useLocation();
+
   const { movies, loading: moviesLoading, error: moviesError } = useSelector((state: RootState) => state.movies);
   const { tvShows, loading: tvShowsLoading, error: tvShowsError } = useSelector((state: RootState) => state.tvShows);
 
@@ -44,6 +51,11 @@ const Home: React.FC = () => {
   const handleTabChange = (tab: "movies" | "tvShows") => {
     setActiveTab(tab);
     setQuery(""); // Clear the search query when switching tabs
+
+    // Update URL query parameter without using history
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("tab", tab);
+    window.history.replaceState({}, '', `${location.pathname}?${searchParams.toString()}`);
   };
 
   const loading = activeTab === "movies" ? moviesLoading : tvShowsLoading;
@@ -89,14 +101,16 @@ const Home: React.FC = () => {
       {!loading && !error && (
         <div className="card-container mt-5 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {items?.map((item: any) => (
-            <div key={item?.id} className="flex flex-col items-center rounded-lg shadow-xl">
-              <img
-                src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
-                alt={item?.title || item?.name}
-                className="w-40 h-60 object-cover rounded-lg"
-              />
-              <p className="p-4 text-center">{item?.title || item?.name}</p>
-            </div>
+            <Link key={item?.id} to={`/${activeTab === "movies" ? "movie" : "show"}/${item.id}`}>
+              <div className="flex flex-col items-center rounded-lg shadow-xl cursor-pointer">
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
+                  alt={item?.title || item?.name}
+                  className="w-40 h-60 object-cover rounded-lg"
+                />
+                <p className="p-4 text-center">{item?.title || item?.name}</p>
+              </div>
+            </Link>
           ))}
         </div>
       )}
